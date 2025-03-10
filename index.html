@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pain Service Resources</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #1e1a5a; /* Dark blue from newsletter */
+        --secondary-color: #f8f8f8; /* Light background */
+        --accent-color: #ff7bac; /* Pink accent from newsletter */
+        --text-color: #333;
+        --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .nhs-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .nhs-text {
+        color: white;
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: right;
+        line-height: 1.4;
+      }
+
+      .notebook-icon {
+        width: 60px;
+        height: 60px;
+      }
+
+      .header-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        text-align: left;
+      }
+
+      .header-subtitle {
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin: 0;
+        text-align: left;
+      }
+
+      .nhs-logo {
+        width: 100px;
+        max-width: 150px;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        height: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--hover-shadow);
+      }
+
+      .card:hover .card-title {
+        color: var(--accent-color);
+      }
+
+      .card-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--primary-color);
+        transition: color 0.3s ease;
+      }
+
+      .card-description {
+        font-size: 0.9rem;
+        color: #666;
+        flex-grow: 1;
+      }
+
+      .card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        height: 100%;
+      }
+
+      .card-icon {
+        background-color: var(--primary-color);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .card-header .card-title {
+        margin-bottom: 0;
+        margin-right: 5px;
+        flex: 1;
+      }
+
+      .card-header .card-icon {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+
+      .card::after {
+        content: "→";
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover::after {
+        transform: translateX(5px);
+      }
+
+      .section-title {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin: 5px 0 20px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid var(--accent-color);
+        display: inline-block;
+      }
+
+      footer {
+        margin-top: 50px;
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 10px;
+      }
+
+      .scroll-indicator {
+        display: none; /* Hide by default on desktop */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 20px;
+        }
+
+        .scroll-indicator {
+          display: flex; /* Show on mobile */
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: var(--primary-color);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: var(--card-shadow);
+          transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+          z-index: 1000;
+          opacity: 1; /* Make visible by default on mobile */
+        }
+
+        .scroll-indicator.hidden {
+          opacity: 0;
+        }
+
+        .scroll-indicator:hover {
+          background-color: var(--accent-color);
+        }
+
+        .scroll-indicator:active {
+          transform: translateX(-50%) scale(0.95);
+        }
+
+        .header-content {
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .header-title {
+          font-size: 2.5rem;
+          text-align: left;
+          line-height: 1;
+        }
+
+        .header-subtitle {
+          font-size: 1.8rem;
+          text-align: left;
+        }
+
+        .notebook-icon {
+          width: 50px;
+          height: 50px;
+        }
+
+        .nhs-logo {
+          width: 80px;
+          height: auto;
+        }
+
+        .logo-container {
+          width: 100%;
+          justify-content: flex-start;
+          gap: 30px;
+        }
+
+        .header-text {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nhs-container {
+          width: 100%;
+          gap: 15px;
+        }
+
+        /* Stack cards in a single column */
+        .cards-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-content">
+          <div class="logo-container">
+            <div class="header-text">
+              <h1 class="header-title">PAIN SERVICE</h1>
+              <h2 class="header-subtitle">RESOURCES</h2>
+            </div>
+              <rect
+                x="20"
+                y="10"
+                width="60"
+                height="80"
+                rx="5"
+                fill="#f5a76c"
+              />
+              <rect x="25" y="15" width="50" height="70" rx="3" fill="#fff" />
+              <line
+                x1="35"
+                y1="30"
+                x2="65"
+                y2="30"
+                stroke="#1e1a5a"
+                stroke-width="2"
+              />
+              <line
+                x1="35"
+                y1="40"
+                x2="65"
+                y2="40"
+                stroke="#1e1a5a"
+                stroke-width="2"
+              />
+              <line
+                x1="35"
+                y1="50"
+                x2="65"
+                y2="50"
+                stroke="#1e1a5a"
+                stroke-width="2"
+              />
+              <line
+                x1="35"
+                y1="60"
+                x2="65"
+                y2="60"
+                stroke="#1e1a5a"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+          <div class="nhs-container">
+            <br class="nhs-text">
+              Oxford University Hospitals </br> NHS Foundation Trust
+            <img
+              src="0ab8cf83468f2cacebcb5820b4e34943.png"
+              alt="NHS Oxford University Hospital"
+              class="nhs-logo"
+            />
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Add scroll indicator -->
+      <div class="scroll-indicator" onclick="scrollToBottom()">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 4L12 20M12 20L18 14M12 20L6 14"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div> 
+
+      <script>
+        function scrollToBottom() {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: "smooth",
+          });
+        }
+
+        // Add scroll button visibility control
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        
+        function handleScroll() {
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          
+          // Only hide the button when we're at the bottom of the page
+          if (windowHeight + scrollTop >= documentHeight - 20) {
+            scrollIndicator.classList.add('hidden');
+          } else {
+            scrollIndicator.classList.remove('hidden');
+          }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll, { passive: true });
+      </script>
+
+      <h2 class="section-title">Clinical Resources</h2>
+      <div class="cards-container">
+        <a
+          href=""
+          class="card-link"
+          id="epidural-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Adjust rate of bodyguard pumps for PCEA</h3>
+                <div class="card-icon">📋</div>
+              </div>
+              <p class="card-description">
+                Follow the guideline on how to adjust infusion volumes within the EPR and Bodyguard pumps for PCEA solutions.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+          href=""
+          class="card-link"
+          id="epidural-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Prolonged-release opioids in post-op pain</h3>
+                <div class="card-icon">📋</div>
+              </div>
+              <p class="card-description">
+                Removal of indication for relief of post-op pain
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+          href="https://app.eolasmedical.com/organisation/Oxford%20University%20Hospitals%20-%20OUH/content-repository/9f2b9316-a233-46a1-bffc-eccd8b62241a/fbe954e4-defa-4e25-9542-4bccda6f82a7/1404de27-95d8-4302-9f0b-0375e9de06a3/46cd9193-2d53-49b1-9cb9-8c66e907be9e/471ee91f-4223-4d92-9079-9a79e420db67"
+          class="card-link"
+          id="epidural-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Renal impairment</h3>
+                <div class="card-icon">📋</div>
+              </div>
+              <p class="card-description">
+                Prescribing opioids in adult patients with renal impairment
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+          href="https://ouhnhsuk.sharepoint.com/sites/policiesandprocedures/Clinical%20Policies%20and%20Procedures/Forms/AllItems.aspx?id=%2Fsites%2Fpoliciesandprocedures%2FClinical%20Policies%20and%20Procedures%2FEntonox%20Equanox%20Guideline%2Epdf&parent=%2Fsites%2Fpoliciesandprocedures%2FClinical%20Policies%20and%20Procedures"
+          class="card-link"
+          id="epidural-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Entonox policy</h3>
+                <div class="card-icon">📋</div>
+              </div>
+              <p class="card-description">
+                Policy update for the use of entonox in adults
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+          href="https://ouhnhsuk.sharepoint.com/sites/policiesandprocedures/Clinical%20Policies%20and%20Procedures/Forms/AllItems.aspx?id=%2Fsites%2Fpoliciesandprocedures%2FClinical%20Policies%20and%20Procedures%2FEpidural%20Analgesia%20in%20Adults%20in%20the%20Inpatient%20Hospital%20Setting%2Epdf&parent=%2Fsites%2Fpoliciesandprocedures%2FClinical%20Policies%20and%20Procedures"
+          class="card-link"
+          id="epidural-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Epidural Analgesia</h3>
+                <div class="card-icon">📋</div>
+              </div>
+              <p class="card-description">
+                Access the latest guidelines and protocols for Epidural
+                Analgesia for inpatient adults.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://ouhnhsuk.sharepoint.com/sites/Pharmacy/Mils/Forms/AllItems.aspx?id=%2Fsites%2FPharmacy%2FMils%2FMILV10N2%2Epdf&parent=%2Fsites%2FPharmacy%2FMils"
+          class="card-link"
+          id="naloxone-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">OUH Naloxone MIL</h3>
+                <div class="card-icon">💊</div>
+              </div>
+              <p class="card-description">
+                Guidelines for the Management of Opioid Toxicity in Adults using
+                Naloxone.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://ouhnhsuk.sharepoint.com/:w:/r/sites/PainService/_layouts/15/Doc.aspx?sourcedoc=%7B0B281297-7FFB-49C3-9627-855B1A081E65%7D&file=IV_morphine_rescue_algorithm-v1.2.docx&action=default&mobileredirect=true&wdLOR=cA07B1D5B-32C9-45DB-9E9B-285567394180"
+          class="card-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Morphine Algorithm</h3>
+                <div class="card-icon">📊</div>
+              </div>
+              <p class="card-description">
+                Algorithm for IV opioid rescue titration with morphine for acute
+                pain management.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://ouhnhsuk.sharepoint.com/:w:/r/sites/PainService/_layouts/15/Doc.aspx?sourcedoc=%7B67665951-383C-4ADA-84DE-0B6684A0ED5C%7D&file=IV_oxycodone_rescue_algorithm-v1.2.docx&action=default&mobileredirect=true&wdLOR=c96ABDF8E-03BD-45C6-83F2-431E52EB2A0E"
+          class="card-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Oxycodone Algorithm</h3>
+                <div class="card-icon">📊</div>
+              </div>
+              <p class="card-description">
+                Algorithm for IV opioid rescue titration with oxycodone for
+                acute pain management.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://app.eolasmedical.com" class="card-link">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">EOLAS Medical App</h3>
+                <div class="card-icon">📱</div>
+              </div>
+              <p class="card-description">
+                Access the EOLAS Medical App for clinical decision support and
+                resources.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://ouhnhsuk.sharepoint.com/sites/PainService"
+          class="card-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Pain Service Intranet</h3>
+                <div class="card-icon">🔗</div>
+              </div>
+              <p class="card-description">
+                Access the Pain Service Intranet for comprehensive resources and
+                information.
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="https://ouhnhsuk.sharepoint.com/sites/PainService/SitePages/Referral-Criteria.aspx?csf=1&web=1&e=UiuhMb&CID=fd137873-cf43-4e62-b853-07a1e1d0ce0d"
+          class="card-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">Pain Referral Criteria</h3>
+                <div class="card-icon">📝</div>
+              </div>
+              <p class="card-description">
+                Access the criteria and guidelines for referring patients to the
+                Pain Service.
+              </p>
+            </div>
+          </div>
+        </a>
+        <a
+          href="https://emj.bmj.com/content/35/3/179"
+          class="card-link"
+        >
+          <div class="card">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">IV vs Oral Paracetamol</h3>
+                <div class="card-icon">📝</div>
+              </div>
+              <p class="card-description">
+                Access article for Intravenous versus oral paracetamol for acute pain in adults in the emergency department setting
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
